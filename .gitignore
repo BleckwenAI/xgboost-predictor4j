@@ -85,7 +85,7 @@ doc/
 *.jar
 
 # Misc
-*.jfr
 generated.model
-*.cc
-build.sbt
+*~
+
+

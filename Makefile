@@ -1,11 +1,5 @@
-JAVA_HOTSPOT ?= /opt/jdk1.8.0_241
+JAVA_CMD ?= java
 TARGET ?= Bench
-
-ifeq (,$(wildcard $(JAVA_HOTSPOT)))
-	JAVA_CMD := java
-else
-	JAVA_CMD := $(JAVA_HOTSPOT)/bin/java -XX:+UnlockCommercialFeatures -XX:+UnlockDiagnosticVMOptions -XX:+FlightRecorder -XX:+DebugNonSafepoints -XX:FlightRecorderOptions=defaultrecording=true,disk=true,repository=/tmp,dumponexit=true
-endif
 
 .PHONY: help
 .DEFAULT_GOAL := help
@@ -25,5 +19,4 @@ coverage: ## run test coverage
 
 bench: ## build with JMH and run bench tests
 	mvn clean package -Pjmh -DskipTests
-	rm -f *.jfr
-	$(JAVA_CMD) -cp . -jar target/xgboost-predictor-*-SNAPSHOT-jmh.jar -f 1 -i 5 -wi 3 $(TARGET)
+	$(JAVA_CMD) -cp . -jar target/xgboost-predictor4j-*-SNAPSHOT-jmh.jar -f 1 -i 5 -wi 3 $(TARGET)

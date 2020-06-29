@@ -27,7 +27,7 @@ class BenchPredict {
 
   @Benchmark
   @OutputTimeUnit(TimeUnit.MILLISECONDS)
-  def predictScoring(ctx: BenchmarkState): Unit = {
+  def predict(ctx: BenchmarkState): Unit = {
     val fvec = ctx.samples(ctx.rand.nextInt(100))
     ctx.predictor.predict(fvec)
   }
