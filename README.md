@@ -68,6 +68,6 @@ BenchXgboost4j.predictContrib      thrpt    5   7.269 ±  1.721  ops/ms
 Note that Xgboost4j figures are really fluctuent and seem to depend a lot upon system status (because of JNI?)
 
 **TO DO**
-* Scala 2.11 packaging
+* Scala 2.12 packaging
 * Multiclass support
 
