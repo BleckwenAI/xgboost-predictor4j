@@ -24,7 +24,7 @@ class BenchPath {
   //@Benchmark
   @OutputTimeUnit(TimeUnit.MILLISECONDS)
   def copyAll(ctx: BenchmarkState): Unit = {
-    ctx.randomPath.copyAll()
+    ctx.randomPath.copyAll
   }
 
   //@Benchmark

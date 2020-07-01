@@ -13,6 +13,13 @@ class BenchPredict {
 
   @Benchmark
   @OutputTimeUnit(TimeUnit.MILLISECONDS)
+  def predict(ctx: BenchmarkState): Unit = {
+    val fvec = ctx.samples(ctx.rand.nextInt(100))
+    ctx.predictor.predict(fvec)
+  }
+
+  @Benchmark
+  @OutputTimeUnit(TimeUnit.MILLISECONDS)
   def predictContribApprox(ctx: BenchmarkState): Unit = {
     val fvec = ctx.samples(ctx.rand.nextInt(100))
     ctx.predictor.predictApproxContrib(fvec)
@@ -25,12 +32,7 @@ class BenchPredict {
     ctx.predictor.predictContrib(fvec)
   }
 
-  @Benchmark
-  @OutputTimeUnit(TimeUnit.MILLISECONDS)
-  def predict(ctx: BenchmarkState): Unit = {
-    val fvec = ctx.samples(ctx.rand.nextInt(100))
-    ctx.predictor.predict(fvec)
-  }
+
 }
 
 object BenchPredict {

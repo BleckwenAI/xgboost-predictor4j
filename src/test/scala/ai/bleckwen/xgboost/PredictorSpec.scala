@@ -7,6 +7,7 @@ import org.apache.commons.io.IOUtils
 import org.scalatest.{Matchers, WordSpec}
 
 import scala.io.Source
+import scala.util.Random
 
 // set logger level: -Dorg.slf4j.simpleLogger.defaultLogLevel=trace
 
@@ -19,7 +20,7 @@ class PredictorSpec extends WordSpec with Matchers with DoubleTolerant {
   private val approxDataPath = "/binary-logistic.approx.txt"
   private val bytes: Array[Byte] = IOUtils.toByteArray(this.getClass.getResourceAsStream(modelPath))
   private lazy val predictor: Predictor = Predictor(bytes)
-
+  private val rand = Random
   private lazy val testLines = Source.fromInputStream(this.getClass.getResourceAsStream(testDataPath)).getLines().take(10).toArray
   private lazy val testData = testLines.iterator.map(toFVector)
 
@@ -62,18 +63,22 @@ class PredictorSpec extends WordSpec with Matchers with DoubleTolerant {
       val ois = new ObjectInputStream(new ByteArrayInputStream(serialized))
       val value = ois.readObject
       ois.close()
-      value match {
-        case p: Predictor =>
-          p.trees.size shouldBe predictor.trees.size
-          p.trees.head.root.mean shouldEqual predictor.trees.head.root.mean
+      val deserialized = value match {
+        case p: Predictor => p
       }
+      deserialized.trees.size shouldBe predictor.trees.size
+      val expected = Source.fromInputStream(this.getClass.getResourceAsStream(predictDataPath)).getLines().map(_.toDouble)
+      (expected zip testData).foreach { x => deserialized.predict(x._2).head shouldEqual x._1 }
     }
 
     "implement serialize" in {
       val bytes = predictor.serialize()
-      val p = Predictor.deserialize(bytes)
-      p.trees.size shouldBe predictor.trees.size
-      p.trees.head.root.mean shouldEqual predictor.trees.head.root.mean
+      val deserialized = Predictor.deserialize(bytes)
+      deserialized.trees.size shouldBe predictor.trees.size
+      deserialized.trees.head.root.mean shouldEqual predictor.trees.head.root.mean
+      val expected = Source.fromInputStream(this.getClass.getResourceAsStream(approxDataPath)).getLines()
+        .map(l => l.split(",").map(_.toDouble))
+      (expected zip testData).foreach(x => deserialized.predictApproxContrib(x._2) shouldEqual x._1)
     }
 
 

@@ -2,7 +2,9 @@ package ai.bleckwen.xgboost
 
 import scala.annotation.tailrec
 
-/* Element of a unique Path in SHAP algorithm described here https://arxiv.org/pdf/1802.03888.pdf
+/**
+ * Element of a unique Path in SHAP algorithm https://arxiv.org/pdf/1802.03888.pdf
+ * @param parent parent element (NilPath in case of root path)
  */
 abstract class PathElement(val parent: PathElement) {
 
@@ -11,8 +13,8 @@ abstract class PathElement(val parent: PathElement) {
   def index: Int
   def depth: Double  // we use a double to avoid conversion during calculus
   def weight: Double
-  def setWeight(weight: Double)
-  def copyAll(): PathElement
+  def setWeight(v: Double)
+  def copyAll: PathElement
 
   lazy val hasParent: Boolean = parent != NilPath
 
@@ -28,8 +30,8 @@ abstract class PathElement(val parent: PathElement) {
     } else {
       val hotChild = node.next(vector)
       val coldChild = if (hotChild == node.left) node.right else node.left
-      PathElement(this.copyAll(), node, hotChild, 1.0).computeShap(vector, contribs, hotChild)
-      PathElement(this.copyAll(), node, coldChild, 0.0).computeShap(vector, contribs, coldChild)
+      PathElement(this.copyAll, node, hotChild, 1.0).computeShap(vector, contribs, hotChild)
+      PathElement(this.copyAll, node, coldChild, 0.0).computeShap(vector, contribs, coldChild)
     }
   }
 
@@ -68,19 +70,19 @@ case object NilPath extends PathElement(null) {
   override def p1: Double = Double.NaN
   override def depth: Double = -1
   override def weight: Double = Double.NaN
-  override def setWeight(weight: Double): Unit = ???
-  override def copyAll(): PathElement = this
+  override def setWeight(v: Double): Unit = throw new IllegalAccessException
+  override def copyAll: PathElement = this
   override def index: Int = -1
 }
 
 object PathElement {
   def apply(parent: PathElement, parentNode: Node, childNode: Node, oneFraction: Double): PathElement =
-    PathElementImpl(parent, childNode.hess / parentNode.hess, oneFraction, parentNode.index, parent.depth + 1, 0.0)
+    PathElementImpl(parent, childNode.sumHess / parentNode.sumHess, oneFraction, parentNode.index, parent.depth + 1, 0.0)
 
   def apply(): PathElement = PathElementImpl(NilPath, 1.0, 1.0, -1, 1, 1.0)
 }
 
-case class PathElementImpl(override val parent: PathElement,
+final case class PathElementImpl(override val parent: PathElement,
                            p0: Double,
                            p1: Double,
                            index: Int,
@@ -88,9 +90,9 @@ case class PathElementImpl(override val parent: PathElement,
                            var weight: Double)
   extends PathElement(parent) {
 
-  override def setWeight(weight: Double): Unit = this.weight = weight
+  override def setWeight(v: Double): Unit = this.weight = v
 
   override def toString: String = f"PathElementImpl($p0,$p1,$index,$depth,$weight)"
 
-  override def copyAll(): PathElement = copy(parent = parent.copyAll())
+  override def copyAll: PathElement = copy(parent = parent.copyAll)
 }

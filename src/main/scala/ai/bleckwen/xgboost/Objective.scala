@@ -1,5 +1,8 @@
 package ai.bleckwen.xgboost
 
+/**
+ * The XGboost Objective functions
+ */
 trait Objective extends Serializable {
   def apply(values: Array[Double]): Array[Double]
 }

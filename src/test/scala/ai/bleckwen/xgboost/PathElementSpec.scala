@@ -3,7 +3,7 @@ package ai.bleckwen.xgboost
 import org.scalatest.{Matchers, WordSpec}
 
 class PathElementSpec extends WordSpec with Matchers with DoubleTolerant {
-  // this tree is a real one generated with agaricus_debug.txt and max depth = 2
+
   val tree: DecisionTree = DecisionTree(NodeFactoryImpl, Array(
     RawNode(0, 1, 2, false, -9.536743E-7f, true, 0, 402.75f),
     RawNode(1, 3, 4, false, -9.536743E-7f, true, 4, 382.0f),
@@ -33,7 +33,7 @@ class PathElementSpec extends WordSpec with Matchers with DoubleTolerant {
       val path = samplePath()
       path.parent.computeWeights()
       path.computeWeights()
-      val duppath = path.copyAll()
+      val duppath = path.copyAll
       duppath.depth shouldEqual path.depth
       duppath.weight shouldEqual path.weight
       duppath.parent.parent.weight shouldEqual path.parent.parent.weight

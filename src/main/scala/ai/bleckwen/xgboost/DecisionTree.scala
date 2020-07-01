@@ -1,6 +1,11 @@
 package ai.bleckwen.xgboost
 
-case class DecisionTree(root: Node) {
+/**
+ * An XGboost Decision Tree
+ * Note that algorithms are independent of Nodes implementation as Node is abstract
+ * @param root root node
+ */
+final case class DecisionTree(root: Node) {
 
   lazy val maxDepth: Int = root.depth
 
@@ -8,7 +13,7 @@ case class DecisionTree(root: Node) {
 
   def getScore(vector: FVector): Double = root.findLeaf(vector).value
 
-  def serialize(): Array[Byte] = root.serialize(fullTree = true)
+  def serialize: Array[Byte] = root.serialize(fullTree = true)
 
   def computeApproxContrib(vector: FVector, contribs: Array[Double]): Unit = {
     var node = root
@@ -32,7 +37,7 @@ case class DecisionTree(root: Node) {
 object DecisionTree {
   def apply(factory: NodeFactory, rawNodes: IndexedSeq[RawNode]): DecisionTree = {
     val tree = DecisionTree(factory.fromRaw(rawNodes))
-    tree.root.computeMean()
+    tree.root.computeMeans()
     tree
   }
 

@@ -2,8 +2,16 @@ package ai.bleckwen.xgboost
 
 import java.nio.{ByteBuffer, ByteOrder}
 
-/*
-This class is just use to read the trees from binary model file, then the Decision trees are rebuilt using our own implementation
+/**
+ * RawNode is just use to read the trees from binary model file
+ * @param id node id
+ * @param left left node id
+ * @param right right node id
+ * @param isLeaf is this a leaf node
+ * @param value leaf value or split value
+ * @param defaultLeft is left child the default
+ * @param splitIndex split index
+ * @param sumHess sum Hess
  */
 final case class RawNode(id: Int, left: Int, right: Int, isLeaf: Boolean, value: Float, defaultLeft: Boolean, splitIndex: Int, var sumHess: Float)
 

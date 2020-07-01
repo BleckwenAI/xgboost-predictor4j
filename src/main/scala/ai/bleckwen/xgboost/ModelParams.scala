@@ -2,6 +2,15 @@ package ai.bleckwen.xgboost
 
 import java.nio.{ByteBuffer, ByteOrder}
 
+/**
+ * the model Parameters
+ * @param baseScore base score
+ * @param nbFeatures number of features
+ * @param nbClass number of classes
+ * @param nbTrees number of trees
+ * @param nbGroups numbet of groups
+ * @param objName objective name
+ */
 final case class ModelParams(baseScore: Float, nbFeatures: Int, nbClass: Int, nbTrees: Int, nbGroups: Int, objName: String) {
 
   import ModelParams._

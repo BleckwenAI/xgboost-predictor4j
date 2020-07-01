@@ -1,12 +1,18 @@
 package ai.bleckwen.xgboost
 
+/**
+ * A generic (binary) node of a decision Tree
+ * @param left left node child (NilNode in case of leaf)
+ * @param right right node child (NilNode in case of leaf)
+ */
 abstract class Node(val left: Node, val right: Node) extends Serializable {
   def defaultLeft: Boolean
   def value: Double
+  def id: Int
   def index: Int
   def mean: Double
-  def hess: Double
-  def setMean(mean: Double)
+  def sumHess: Double
+  def setMean(v: Double)
   def serialize(fullTree: Boolean = false): Array[Byte]
 
   lazy val isLeaf: Boolean = left == NilNode
@@ -15,7 +21,7 @@ abstract class Node(val left: Node, val right: Node) extends Serializable {
 
   def next(vector: FVector): Node = vector.get(index) match {
       case None => if (defaultLeft) left else right
-      case Some(value) => if (value < value) left else right
+      case Some(v) => if (v < value) left else right
     }
 
   def findLeaf(vector: FVector): Node = {
@@ -26,10 +32,10 @@ abstract class Node(val left: Node, val right: Node) extends Serializable {
 
   def depth: Int = if (isLeaf) 0 else 1 + Math.max(left.depth, right.depth)
 
-  def computeMean(): Double = {
-    val mean = if (isLeaf) value else (left.computeMean + right.computeMean) / hess
-    setMean(mean)
-    hess * mean
+  def computeMeans(): Double = {
+    val m = if (isLeaf) value else (left.computeMeans() + right.computeMeans()) / sumHess
+    setMean(m)
+    sumHess * m
   }
 
 }
@@ -38,13 +44,14 @@ case object NilNode extends Node(null, null) {
   override val defaultLeft: Boolean = true
   override val value: Double =  Double.NaN
   override val index: Int = -1
+  override def id: Int = -1
   override val mean: Double =  Double.NaN
-  override val hess: Double =  Double.NaN
-  override def setMean(meanValue: Double): Unit = ???
-  override def serialize(fullTree: Boolean): Array[Byte] = ???
+  override val sumHess: Double =  Double.NaN
+  override def setMean(v: Double): Unit = throw new IllegalAccessException
+  override def serialize(fullTree: Boolean): Array[Byte] = throw new IllegalAccessException
 }
 
-abstract class NodeFactory{
+abstract class NodeFactory {
    def fromRaw(rawNodes: IndexedSeq[RawNode]): Node
    def fromBytes(bytes: Array[Byte]): Node
 }

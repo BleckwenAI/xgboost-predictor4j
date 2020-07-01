@@ -4,54 +4,58 @@ import java.nio.ByteBuffer
 
 import scala.collection.mutable
 
-/*
-Implementation of TreeNode with a simple Case Class
+/**
+ * The node implementation (actually a simple case class)
+ * @param left left child
+ * @param right right child
+ * @param id rw node id (just used for information)
+ * @param index split index
+ * @param defaultLeft is left child the default
+ * @param value node value
+ * @param sumHess sum hess
+ * @param mean mean value
  */
 final case class NodeImpl(override val left: Node,
                           override val right: Node,
+                          id: Int,
                           index: Int,
                           defaultLeft: Boolean,
                           value: Double,
-                          hess: Double,
+                          sumHess: Double,
                           var mean: Double = 0.0)
   extends Node(left, right) {
-  import NodeFactoryImpl.serializedIds
 
-  override def setMean(mean: Double): Unit = this.mean = mean
+  override def setMean(v: Double): Unit = this.mean = v
 
   def serialize(fullTree: Boolean = false): Array[Byte] = {
     if (fullTree) {
-      serializedIds.clear()
       ByteBuffer.allocate(java.lang.Integer.BYTES).putInt(size).array() ++ serialize()
-    } else if (isLeaf) serializeNode()
-      else left.serialize() ++ right.serialize() ++ serializeNode()
+    } else if (isLeaf) serializeNode
+      else left.serialize() ++ right.serialize() ++ serializeNode
   }
 
-  private def serializeNode(): Array[Byte] = {
-    val nodeId = serializedIds.size + 1
-    serializedIds.put(this, nodeId)
+  private def serializeNode: Array[Byte] = {
     val buffer = ByteBuffer.allocate(5 * java.lang.Integer.BYTES + 3 * java.lang.Double.BYTES)
-    buffer.putInt(nodeId)
-    buffer.putInt(serializedIds.getOrElse(left, -1))
-    buffer.putInt(serializedIds.getOrElse(right, -1))
+    buffer.putInt(id)
+    buffer.putInt(left.id)
+    buffer.putInt(right.id)
     buffer.putInt(index)
     buffer.putInt(if (defaultLeft) 1 else 0)
     buffer.putDouble(value)
-    buffer.putDouble(hess)
+    buffer.putDouble(sumHess)
     buffer.putDouble(mean)
     buffer.array
   }
 
-  override def toString: String = f"NodeImpl($index,$defaultLeft,$value,$hess)"
+  override def toString: String = f"Node@${Integer.toHexString(hashCode)}($id)"
 }
 
 case object NodeFactoryImpl extends NodeFactory {
-  val serializedIds: mutable.Map[Node, Int] = mutable.Map.empty
 
   override def fromRaw(nodes: IndexedSeq[RawNode]): Node = {
     def build(raw: RawNode): NodeImpl = {
-      if (raw.isLeaf) NodeImpl(NilNode, NilNode, 0, defaultLeft = true, raw.value, raw.sumHess)
-      else NodeImpl(build(nodes(raw.left)),  build(nodes(raw.right)), raw.splitIndex, raw.defaultLeft, raw.value, raw.sumHess)
+      if (raw.isLeaf) NodeImpl(NilNode, NilNode, raw.id, 0, defaultLeft = true, raw.value, raw.sumHess)
+      else NodeImpl(build(nodes(raw.left)),  build(nodes(raw.right)), raw.id, raw.splitIndex, raw.defaultLeft, raw.value, raw.sumHess)
     }
     build(nodes(0))
   }
@@ -66,6 +70,7 @@ case object NodeFactoryImpl extends NodeFactory {
       node = NodeImpl(
         nodesMap.getOrElse(buffer.getInt, NilNode),
         nodesMap.getOrElse(buffer.getInt, NilNode),
+        nodeId,
         buffer.getInt,
         buffer.getInt == 1,
         buffer.getDouble,

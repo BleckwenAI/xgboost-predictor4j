@@ -24,7 +24,7 @@ class DecisionTreeSpec extends WordSpec with Matchers with DoubleTolerant {
 
     "implement serialize()" in {
       val tree = DecisionTree(nodefactory, rawNodes)
-      val deser = DecisionTree(nodefactory, tree.serialize())
+      val deser = DecisionTree(nodefactory, tree.serialize)
       deser.maxDepth shouldBe tree.maxDepth
     }
 
