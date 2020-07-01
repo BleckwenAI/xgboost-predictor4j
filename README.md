@@ -16,6 +16,22 @@ Pure JVM implementation of [XGBoost](https://github.com/dmlc/xgboost/) predictor
 * predictContrib() use SHAP algorithm described in this [paper](https://arxiv.org/pdf/1802.03888.pdf) but does not check for duplicate indexes (`rewind` is not implemented).
 The impact is negligeable as it happens in very rare situation (a comparison with XGBoots4J performed on 1_000_000 records did not raise any discrepancy)
 
+**Integration**
+
+The package is not yet available on Maven Central.
+
+* With Maven 
+```xml
+<dependency>
+  <groupId>ai.bleckwen</groupId>
+  <artifactId>xgboost-predictor4j</artifactId>
+  <version>0.1</version>
+</dependency>
+```
+* With SBT
+```
+libraryDependencies += "ai.bleckwen" % "xgboost-predictor4j" % "0.1"
+```
 
 **Using Predictor in Scala**
 
@@ -50,4 +66,8 @@ BenchXgboost4j.predictContrib      thrpt    5   7.269 ±  1.721  ops/ms
 ```
 
 Note that Xgboost4j figures are really fluctuent and seem to depend a lot upon system status (because of JNI?)
+
+**TO DO**
+* Scala 2.11 packaging
+* Multiclass support
 
