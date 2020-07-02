@@ -4,11 +4,14 @@ TARGET ?= Bench
 .PHONY: help
 .DEFAULT_GOAL := help
 help:
-	@echo  $$(fgrep -h "## " $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/^\([a-z][a-z_\-]*\): .*##/\\nmake \\033[1;34m\1\\033[0m \\t:/g')
+	@echo  $$(fgrep -h "## " $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/^\([a-z][a-z0-9]*\): .*##/\\nmake \\033[1;34m\1\\033[0m \\t:/g')
 
 
 build: ## build and install
 	mvn clean install
+
+build12: ## build and install with Scala 2.12
+	mvn clean install -Pscala12
 
 scapegoat: ## compile with scapegoat enabled
 	mvn clean compile -Pscapegoat -DskipTests

@@ -12,7 +12,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <scala.version>2.11.12</scala.version>
-    <scala.version.major>2.11</scala.version.major>
+    <scala.major.version>2.11</scala.major.version>
     <scala.maven.plugin.version>4.0.2</scala.maven.plugin.version>
     <scalatest.version>3.0.8</scalatest.version>
     <scalatest-maven-plugin.version>2.0.0</scalatest-maven-plugin.version>
@@ -25,6 +25,7 @@
     <maven-jar-plugin.version>2.6</maven-jar-plugin.version>
     <maven-assembly-plugin.version>3.3.0</maven-assembly-plugin.version>
     <xgboost4j.version>1.0.0</xgboost4j.version>
+    <xgboost4j.scope>test</xgboost4j.scope>
     <jmh.version>1.21</jmh.version>
   </properties>
 
@@ -37,7 +38,7 @@
     
     <dependency>
       <groupId>org.scalatest</groupId>
-      <artifactId>scalatest_${scala.version.major}</artifactId>
+      <artifactId>scalatest_${scala.major.version}</artifactId>
       <version>${scalatest.version}</version>
       <scope>test</scope>
     </dependency>
@@ -63,7 +64,7 @@
 
     <dependency>
       <groupId>ml.dmlc</groupId>
-      <artifactId>xgboost4j_${scala.version.major}</artifactId>
+      <artifactId>xgboost4j_${scala.major.version}</artifactId>
       <version>${xgboost4j.version}</version>
       <scope>${xgboost4j.scope}</scope>
     </dependency>
@@ -164,9 +165,21 @@
       <activation>
         <activeByDefault>true</activeByDefault>
       </activation>
+    </profile>
+
+    <!-- Scala 2.12 -->
+    <profile>
+      <id>scala12</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
       <properties>
-        <xgboost4j.scope>test</xgboost4j.scope>
+        <scala.major.version>2.12</scala.major.version>
+        <scala.version>2.12.8</scala.version>
       </properties>
+      <build>
+        <finalName>${project.artifactId}_${scala.major.version}</finalName>
+      </build>
     </profile>
 
     <!-- SCAPEGOAT -->

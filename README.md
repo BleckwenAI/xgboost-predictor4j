@@ -33,6 +33,8 @@ The package is not yet available on Maven Central.
 libraryDependencies += "ai.bleckwen" % "xgboost-predictor4j" % "0.1"
 ```
 
+The package was build and published wih **Scala 2.11.12** but you can rebuild it with Scala 2.12 by using Maven profile `scala12` or by using the Makefile goal. 
+
 **Using Predictor in Scala**
 
 ```java
@@ -68,6 +70,5 @@ BenchXgboost4j.predictContrib      thrpt    5   7.269 ±  1.721  ops/ms
 Note that Xgboost4j figures are really fluctuent and seem to depend a lot upon system status (because of JNI?)
 
 **TO DO**
-* Scala 2.12 packaging
 * Multiclass support
 
