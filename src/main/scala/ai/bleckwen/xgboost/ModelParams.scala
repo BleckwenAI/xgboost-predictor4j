@@ -1,6 +1,7 @@
 package ai.bleckwen.xgboost
 
-import java.nio.{ByteBuffer, ByteOrder}
+import java.nio.ByteBuffer
+import java.nio.ByteOrder
 
 /**
  * the model Parameters
@@ -13,16 +14,14 @@ import java.nio.{ByteBuffer, ByteOrder}
  */
 final case class ModelParams(baseScore: Float, nbFeatures: Int, nbClass: Int, nbTrees: Int, nbGroups: Int, objName: String) {
 
-  import ModelParams._
-
   def serialize(): Array[Byte] = {
-    val buffer = ByteBuffer.allocate(java.lang.Float.BYTES + 4 * java.lang.Integer.BYTES + sizeOf(objName))
+    val buffer = ByteBuffer.allocate(java.lang.Float.BYTES + 4 * java.lang.Integer.BYTES + ModelParams.sizeOf(objName))
     buffer.putFloat(baseScore)
     buffer.putInt(nbFeatures)
     buffer.putInt(nbClass)
     buffer.putInt(nbTrees)
     buffer.putInt(nbGroups)
-    putString(buffer, objName)
+    ModelParams.putString(buffer, objName)
     buffer.array()
   }
 }

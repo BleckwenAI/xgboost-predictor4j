@@ -20,7 +20,7 @@ trait FVector extends Serializable {
 final case class DenseFVector(values: Array[Double], treatZeroAsNa: Boolean = true) extends FVector {
   override def get(i: Int): Option[Double] = values(i) match {
     case 0.0 if treatZeroAsNa => None
-    case d => Some(d)
+    case d: Double => Some(d)
   }
 }
 

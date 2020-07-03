@@ -27,6 +27,15 @@
     <xgboost4j.version>1.0.0</xgboost4j.version>
     <xgboost4j.scope>test</xgboost4j.scope>
     <jmh.version>1.21</jmh.version>
+    <sonar-maven-plugin.version>3.7.0.1746</sonar-maven-plugin.version>
+    <sonar.projectName>${project.artifactId}</sonar.projectName>
+    <sonar.projectKey>ai.bleckwen.${project.artifactId}</sonar.projectKey>
+    <sonar.moduleKey>${project.artifactId}</sonar.moduleKey>
+    <sonar.scala.version>2.11</sonar.scala.version>
+    <sonar.scala.scoverage.reportPath>target/scoverage.xml</sonar.scala.scoverage.reportPath>
+    <sonar.scala.scapegoat.reportPath>target/scapegoat-report/scapegoat.xml</sonar.scala.scapegoat.reportPath>
+    <sonar.dependencyCheck.reportPath>target/dependency-report/dependency-check-report.xml</sonar.dependencyCheck.reportPath>
+    <sonar.dependencyCheck.htmlReportPath>target/dependency-report/dependency-check-report.html</sonar.dependencyCheck.htmlReportPath>
   </properties>
 
   <dependencies>
@@ -71,6 +80,8 @@
 
   </dependencies>
   <build>
+    <sourceDirectory>${basedir}/src/main/scala</sourceDirectory>
+
     <plugins>
       <plugin>
         <groupId>net.alchim31.maven</groupId>
@@ -126,6 +137,17 @@
         <version>${maven-release-plugin.version}</version>
       </plugin>
 
+      <plugin>
+        <groupId>org.owasp</groupId>
+        <artifactId>dependency-check-maven</artifactId>
+        <version>5.2.4</version>
+        <configuration>
+          <format>ALL</format>
+          <outputDirectory>${project.build.directory}/dependency-report</outputDirectory>
+          <skipSystemScope>true</skipSystemScope>
+        </configuration>
+      </plugin>
+
       <!--DISABLED PLUGINS-->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -158,8 +180,37 @@
     </plugins>
   </build>
 
-  <profiles>
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-project-info-reports-plugin</artifactId>
+        <version>3.0.0</version>
+        <reportSets>
+          <reportSet>
+            <reports>
+              <report>index</report>
+            </reports>
+          </reportSet>
+        </reportSets>
+      </plugin>
 
+      <plugin>
+        <groupId>org.scoverage</groupId>
+        <artifactId>scoverage-maven-plugin</artifactId>
+        <version>${scoverage-plugin.version}</version>
+        <reportSets>
+          <reportSet>
+            <reports>
+              <report>report</report>
+            </reports>
+          </reportSet>
+        </reportSets>
+      </plugin>
+    </plugins>
+  </reporting>
+
+  <profiles>
     <profile>
       <id>default</id>
       <activation>

@@ -1,6 +1,7 @@
 package ai.bleckwen.xgboost
 
-import java.nio.{BufferUnderflowException, ByteBuffer}
+import java.nio.BufferUnderflowException
+import java.nio.ByteBuffer
 import java.lang.{Double => JDouble, Integer => JInt}
 import java.util.{Map => JMap}
 
@@ -13,7 +14,6 @@ import java.util.{Map => JMap}
 @SerialVersionUID(1L)
 // do not add a final as we are mocking this class in our tests
 case class Predictor(params: ModelParams, trees: Seq[DecisionTree], objective: Objective) {
-  import Predictor._
 
   /**
    * Predict score
@@ -108,9 +108,9 @@ case class Predictor(params: ModelParams, trees: Seq[DecisionTree], objective: O
   def serialize() : Array[Byte] = {
     val paramsBytes = params.serialize()
     val treesBytes = trees.map(_.serialize)
-    val buffer = ByteBuffer.allocate(sizeOf(paramsBytes) + treesBytes.map(sizeOf).sum)
-    putBytes(buffer, paramsBytes)
-    treesBytes.foreach(putBytes(buffer,_))
+    val buffer = ByteBuffer.allocate(Predictor.sizeOf(paramsBytes) + treesBytes.map(Predictor.sizeOf).sum)
+    Predictor.putBytes(buffer, paramsBytes)
+    treesBytes.foreach(Predictor.putBytes(buffer,_))
     buffer.array
   }
 
