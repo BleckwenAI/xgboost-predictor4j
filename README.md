@@ -1,7 +1,7 @@
 xgboost-predictor4j
 ===================
 
-https://github.com/BleckwenAI/xgboost-predictor4j/workflows/build/badge.svg
+![build](https://github.com/BleckwenAI/xgboost-predictor4j/workflows/build/badge.svg)
 
 
 Pure JVM implementation of [XGBoost](https://github.com/dmlc/xgboost/) predictor in Scala
