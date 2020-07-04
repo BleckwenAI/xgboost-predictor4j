@@ -19,9 +19,8 @@ build: ## build and install
 
 coverage: ## run coverage and update the README
 	mvn scoverage:report
-
-readme:
 	coverage=$$(sed -nE 's/ *<td>([0-9]*).[0-9]*%<.*/\1/p' target/site/scoverage/packages.html | head -1); sed -i "s/coverage-.*%25/coverage-$$coverage%25/" README.md
+	git status
 
 build12: ## build and install with Scala 2.12
 	mvn clean install -Pscala12

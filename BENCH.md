@@ -1,4 +1,10 @@
-The predictions are performed on the generated XGboost model `generated.model` (having 126 features and 1000 trees)
+##Micro-benchmarks
+
+The benchmarks are done with [JMH](https://openjdk.java.net/projects/code-tools/jmh/) framework.
+
+Execute `make bench` to run them.
+
+The predictions are performed on the generated (by `Xgboost4jCompatibilySpec`) XGboost model `generated.model` having 126 features and 1000 trees.
   
 The figures below were done with a single thread on a Intel(R) Core(TM) i5-6400
 ```

@@ -3,7 +3,7 @@ xgboost-predictor4j
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![build](https://github.com/BleckwenAI/xgboost-predictor4j/workflows/build/badge.svg)](https://github.com/BleckwenAI/xgboost-predictor4j/actions)
-![Coverage](https://img.shields.io/badge/coverage-84%25-<COLOR>.svg)
+![Coverage](https://img.shields.io/badge/coverage-85%25-<COLOR>.svg)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/ai.bleckwen/xgboost-predictor4j/badge.svg)](https://maven-badges.herokuapp.com/maven-central/ai.bleckwen/xgboost-predictor)
 [![Documentation](https://img.shields.io/badge/doc-DRAFT-YELLOW.svg)](https://github.com/BleckwenAI/xgboost-predictor4j/wiki)
 
@@ -64,7 +64,7 @@ The package was build and published wih **Scala 2.11.12** but you can rebuild it
 
 **Benchmarks**
 
-See BENCH.md
+See [BENCH.md](https://github.com/BleckwenAI/xgboost-predictor4j/blob/master/BENCH.md)
 
 
 **TO DO**
