@@ -1,13 +1,16 @@
 xgboost-predictor4j
 ===================
 
-![build](https://github.com/BleckwenAI/xgboost-predictor4j/workflows/build/badge.svg)
-
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![build](https://github.com/BleckwenAI/xgboost-predictor4j/workflows/build/badge.svg)](https://github.com/BleckwenAI/xgboost-predictor4j/actions)
+![Coverage](https://img.shields.io/badge/coverage-84%25-<COLOR>.svg)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/ai.bleckwen/xgboost-predictor4j/badge.svg)](https://maven-badges.herokuapp.com/maven-central/ai.bleckwen/xgboost-predictor)
+[![Documentation](https://img.shields.io/badge/doc-DRAFT-YELLOW.svg)](https://github.com/BleckwenAI/xgboost-predictor4j/wiki)
 
 Pure JVM implementation of [XGBoost](https://github.com/dmlc/xgboost/) predictor in Scala
 
 **Features**
-* Fast (faster than XGboost4j)
+* Much faster than XGboost4j especially on distributed architectures like Flink or Spark
 * No dependency at all (no need to install `libgomp`)
 * Designed for streaming (on-the-fly prediction)
 * Scala and Java APIs with flexible input (Array or FVector)
@@ -18,6 +21,9 @@ Pure JVM implementation of [XGBoost](https://github.com/dmlc/xgboost/) predictor
 * Only binary classification (binary:logistic) is supported in this release
 * predictContrib() use SHAP algorithm described in this [paper](https://arxiv.org/pdf/1802.03888.pdf) but does not check for duplicate indexes (`rewind` is not implemented).
 The impact is negligeable as it happens in very rare situation (a comparison with XGBoots4J performed on 1_000_000 records did not raise any discrepancy)
+
+**Release History**
+* 0.1 initial version
 
 **Integration**
 
@@ -58,19 +64,8 @@ The package was build and published wih **Scala 2.11.12** but you can rebuild it
 
 **Benchmarks**
 
-The predictions are performed on the generated XGboost model `generated.model` (having 126 features and 1000 trees)
-  
-The figures below were done with a single thread on a Intel(R) Core(TM) i5-6400
-```
-Benchmark                           Mode  Cnt   Score    Error   Units
-BenchPredict.predictContrib        thrpt    5   6.300 ±  0.006  ops/ms
-BenchPredict.predictContribApprox  thrpt    5  87.402 ± 11.126  ops/ms
-BenchPredict.predict               thrpt    5  98.762 ±  1.583  ops/ms
-BenchXgboost4j.predict             thrpt    5  68.195 ±  4.002  ops/ms
-BenchXgboost4j.predictContrib      thrpt    5   7.269 ±  1.721  ops/ms
-```
+See BENCH.md
 
-Note that Xgboost4j figures are really fluctuent and seem to depend a lot upon system status (because of JNI?)
 
 **TO DO**
 * Multiclass support
