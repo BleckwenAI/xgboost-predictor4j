@@ -221,9 +221,6 @@
     <!-- Scala 2.12 -->
     <profile>
       <id>scala12</id>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
       <properties>
         <scala.major.version>2.12</scala.major.version>
         <scala.version>2.12.8</scala.version>
