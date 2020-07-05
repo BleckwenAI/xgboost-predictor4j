@@ -7,10 +7,10 @@ xgboost-predictor4j
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/ai.bleckwen/xgboost-predictor4j/badge.svg)](https://maven-badges.herokuapp.com/maven-central/ai.bleckwen/xgboost-predictor)
 [![Documentation](https://img.shields.io/badge/doc-DRAFT-YELLOW.svg)](https://github.com/BleckwenAI/xgboost-predictor4j/wiki)
 
-Pure JVM implementation of [XGBoost](https://github.com/dmlc/xgboost/) predictor in Scala
+[Bleckwen](https://bleckwen.ai/) implementation of [XGBoost](https://github.com/dmlc/xgboost/) predictor in Scala
 
 **Features**
-* Much faster than XGboost4j especially on distributed architectures like Flink or Spark
+* Faster than XGboost4j especially on distributed frameworks like Flink or Spark
 * No dependency at all (no need to install `libgomp`)
 * Designed for streaming (on-the-fly prediction)
 * Scala and Java APIs with flexible input (Array or FVector)
