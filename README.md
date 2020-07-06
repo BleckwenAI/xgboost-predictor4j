@@ -4,7 +4,7 @@ xgboost-predictor4j
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![build](https://github.com/BleckwenAI/xgboost-predictor4j/workflows/build/badge.svg)](https://github.com/BleckwenAI/xgboost-predictor4j/actions)
 ![Coverage](https://img.shields.io/badge/coverage-85%25-<COLOR>.svg)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/ai.bleckwen/xgboost-predictor4j/badge.svg)](https://maven-badges.herokuapp.com/maven-central/ai.bleckwen/xgboost-predictor)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/ai.bleckwen/xgboost-predictor4j/badge.svg)](https://maven-badges.herokuapp.com/maven-central/ai.bleckwen/xgboost-predictor4j)
 [![Documentation](https://img.shields.io/badge/doc-DRAFT-YELLOW.svg)](https://github.com/BleckwenAI/xgboost-predictor4j/wiki)
 
 [Bleckwen](https://bleckwen.ai/) implementation of [XGBoost](https://github.com/dmlc/xgboost/) predictor in Scala
@@ -23,23 +23,21 @@ xgboost-predictor4j
 The impact is negligeable as it happens in very rare situation (a comparison with XGBoots4J performed on 1_000_000 records did not raise any discrepancy)
 
 **Release History**
-* 0.1 initial version
+* 1.0 07/2020 first version
 
 **Integration**
 
-The package is not yet available on Maven Central.
-
-* With Maven 
+T* With Maven 
 ```xml
 <dependency>
   <groupId>ai.bleckwen</groupId>
   <artifactId>xgboost-predictor4j</artifactId>
-  <version>0.1</version>
+  <version>1.0</version>
 </dependency>
 ```
 * With SBT
 ```
-libraryDependencies += "ai.bleckwen" % "xgboost-predictor4j" % "0.1"
+libraryDependencies += "ai.bleckwen" % "xgboost-predictor4j" % "1.0"
 ```
 
 The package was build and published wih **Scala 2.11.12** but you can rebuild it with Scala 2.12 by using Maven profile `scala12` or by using the Makefile goal. 
