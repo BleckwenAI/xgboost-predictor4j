@@ -32,7 +32,7 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <scala.version>2.11.12</scala.version>
     <scala.major.version>2.11</scala.major.version>
-    <scala.maven.plugin.version>4.0.2</scala.maven.plugin.version>
+    <scala.maven.plugin.version>4.4.0</scala.maven.plugin.version>
     <scalatest.version>3.0.8</scalatest.version>
     <scalatest-maven-plugin.version>2.0.0</scalatest-maven-plugin.version>
     <scala-plugin-scoverage.version>1.4.0</scala-plugin-scoverage.version>
@@ -115,6 +115,12 @@
             <goals>
               <goal>compile</goal>
               <goal>testCompile</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>attach-javadocs</id>
+            <goals>
+              <goal>doc-jar</goal>
             </goals>
           </execution>
         </executions>
@@ -270,7 +276,32 @@
               <autoReleaseAfterClose>true</autoReleaseAfterClose>
             </configuration>
           </plugin>
-
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-source-plugin</artifactId>
+            <version>2.2.1</version>
+            <executions>
+              <execution>
+                <id>attach-sources</id>
+                <goals>
+                  <goal>jar-no-fork</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <version>2.9.1</version>
+            <executions>
+              <execution>
+                <id>attach-javadocs</id>
+                <goals>
+                  <goal>jar</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-gpg-plugin</artifactId>
@@ -314,6 +345,7 @@
                 <id>scala-compile</id>
                 <goals>
                   <goal>compile</goal>
+                  <goal>add-source</goal>
                 </goals>
               </execution>
               <execution>
