@@ -21,8 +21,7 @@
     </developer>
   </developers>
   <scm>
-    <connection>git@github.com:BleckwenAI/xgboost-predictor4j.git</connection>
-    <developerConnection>scm:git:https://github.com/BleckwenAI/xgboost-predictor4j.git</developerConnection>
+    <developerConnection>scm:git:git@github.com:BleckwenAI/xgboost-predictor4j.git</developerConnection>
     <url>https://github.com/BleckwenAI/xgboost-predictor4j</url>
     <tag>xgboost-predictor4j-0.1</tag>
   </scm>
