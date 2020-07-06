@@ -42,4 +42,4 @@ sonar: ## run scapegoat, scoverage, dependency check and and publish results on 
 
 release: ## release on Maven central
 	mvn release:prepare -DignoreSnapshots -P release
-    mvn release:perform -P release
+	mvn release:perform -P release
