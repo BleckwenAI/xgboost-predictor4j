@@ -4,7 +4,7 @@
   <groupId>ai.bleckwen</groupId>
   <artifactId>xgboost-predictor4j</artifactId>
   <packaging>jar</packaging>
-  <version>0.2-SNAPSHOT</version>
+  <version>0.2</version>
   <name>xgboost-predictor4j</name>
   <description>Bleckwen implementation of XGBoost predictor</description>
   <url>https://github.com/BleckwenAI/xgboost-predictor4j</url>
@@ -23,7 +23,7 @@
   <scm>
     <developerConnection>scm:git:git@github.com:BleckwenAI/xgboost-predictor4j.git</developerConnection>
     <url>https://github.com/BleckwenAI/xgboost-predictor4j</url>
-    <tag>xgboost-predictor4j-0.1</tag>
+    <tag>xgboost-predictor4j-0.2</tag>
   </scm>
 
 
