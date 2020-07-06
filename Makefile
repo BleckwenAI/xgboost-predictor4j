@@ -17,8 +17,11 @@ help:
 build: ## build and install
 	mvn clean install
 
+scapegoat: ## run scapegoat
+	mvn clean compile -Pscapegoat -DskipTests
+
 coverage: ## run coverage and update the README
-	mvn scoverage:report
+	mvn clean scoverage:report
 	coverage=$$(sed -nE 's/ *<td>([0-9]*).[0-9]*%<.*/\1/p' target/site/scoverage/packages.html | head -1); sed -i "s/coverage-.*%25/coverage-$$coverage%25/" README.md
 	git status
 
