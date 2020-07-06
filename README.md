@@ -7,27 +7,27 @@ xgboost-predictor4j
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/ai.bleckwen/xgboost-predictor4j/badge.svg)](https://maven-badges.herokuapp.com/maven-central/ai.bleckwen/xgboost-predictor4j)
 [![Documentation](https://img.shields.io/badge/doc-DRAFT-YELLOW.svg)](https://github.com/BleckwenAI/xgboost-predictor4j/wiki)
 
-[Bleckwen](https://bleckwen.ai/) implementation of [XGBoost](https://github.com/dmlc/xgboost/) predictor in Scala
+[Bleckwen](https://bleckwen.ai/) JVM implementation of [XGBoost](https://github.com/dmlc/xgboost/) Predictor
 
 **Features**
 * Faster than XGboost4j especially on distributed frameworks like Flink or Spark
-* No dependency at all (no need to install `libgomp`)
+* No dependency (no need to install `libgomp`)
 * Designed for streaming (on-the-fly prediction)
 * Scala and Java APIs with flexible input (Array or FVector)
 * Compatible with XGboost models 0.90 and 1.0.0 
-* Support of ML interpretability with fast Means algorithm (`predictApproxContrib`) and slower SHAP algorithm (`predictContrib`)
+* Support of ML interpretability with fast algorithm (`predictApproxContrib`) and slower SHAP algorithm (`predictContrib`)
 
 **Limitations**
 * Only binary classification (binary:logistic) is supported in this release
 * predictContrib() use SHAP algorithm described in this [paper](https://arxiv.org/pdf/1802.03888.pdf) but does not check for duplicate indexes (`rewind` is not implemented).
-The impact is negligeable as it happens in very rare situation (a comparison with XGBoots4J performed on 1_000_000 records did not raise any discrepancy)
+The impact is negligeable as it happens in very rare situation (a comparison with XGBoots4J performed on 1_000_000 random records did not show any discrepancy)
 
 **Release History**
 * 1.0 07/2020 first version
 
 **Integration**
 
-T* With Maven 
+* Maven 
 ```xml
 <dependency>
   <groupId>ai.bleckwen</groupId>
@@ -35,7 +35,7 @@ T* With Maven
   <version>1.0</version>
 </dependency>
 ```
-* With SBT
+* SBT
 ```
 libraryDependencies += "ai.bleckwen" % "xgboost-predictor4j" % "1.0"
 ```
@@ -45,7 +45,7 @@ The package was build and published wih **Scala 2.11.12** but you can rebuild it
 **Using Predictor in Scala**
 
 ```java
-  val bytes = org.apache.commons.io.IOUtils.toByteArray(this.getClass.getResourceAsStream("my model path"))
+  val bytes = org.apache.commons.io.IOUtils.toByteArray(this.getClass.getResourceAsStream("/path_to.model"))
   val predictor = Predictor(bytes)
   val denseArray = Array(0.23, 0.0, 1.0, 0.5)
   val score = predictor.predict(denseArray).head
@@ -54,17 +54,14 @@ The package was build and published wih **Scala 2.11.12** but you can rebuild it
 **Using Predictor in Java**
 
 ```java
-   byte[] bytes = org.apache.commons.io.IOUtils.toByteArray(this.getClass().getResourceAsStream("my model path"));
+   byte[] bytes = org.apache.commons.io.IOUtils.toByteArray(this.getClass().getResourceAsStream("/path_to.model"));
    Predictor predictor = (new PredictorBuilder()).build(bytes) ;
    double[] denseArray = {0, 0, 32, 0, 0, 16, -8, 0, 0, 0};
-   double[] prediction = predictor.predict(denseArray);
+   double score = predictor.predict(denseArray)[0];
 ```
 
 **Benchmarks**
 
 See [BENCH.md](https://github.com/BleckwenAI/xgboost-predictor4j/blob/master/BENCH.md)
 
-
-**TO DO**
-* Multiclass support
 
