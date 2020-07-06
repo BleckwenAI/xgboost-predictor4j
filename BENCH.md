@@ -1,4 +1,4 @@
-##Micro-benchmarks##
+## Micro-benchmarks
 
 The benchmarks are done with [JMH](https://openjdk.java.net/projects/code-tools/jmh/) framework.
 
