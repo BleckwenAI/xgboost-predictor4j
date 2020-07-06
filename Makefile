@@ -39,3 +39,7 @@ sonar: ## run scapegoat, scoverage, dependency check and and publish results on 
 	mvn scoverage:report
 	mvn dependency-check:check
 	mvn sonar:sonar -Dsonar.host.url=$(SONAR_URL) -Dsonar.exclusions=pom.xml
+
+release: ## release on Maven central
+	mvn release:prepare -DignoreSnapshots -P release
+    mvn release:perform -P release
