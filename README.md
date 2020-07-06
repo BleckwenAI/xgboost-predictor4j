@@ -23,7 +23,7 @@ xgboost-predictor4j
 The impact is negligeable as it happens in very rare situation (a comparison with XGBoots4J performed on 1_000_000 random records did not show any discrepancy)
 
 **Release History**
-* 1.0 07/2020 first version
+* 1.0 06/07/2020 first version
 
 **Integration**
 
