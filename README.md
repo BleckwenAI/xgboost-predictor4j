@@ -5,7 +5,7 @@ xgboost-predictor4j
 [![build](https://github.com/BleckwenAI/xgboost-predictor4j/workflows/build/badge.svg)](https://github.com/BleckwenAI/xgboost-predictor4j/actions)
 ![Coverage](https://img.shields.io/badge/coverage-85%25-<COLOR>.svg)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/ai.bleckwen/xgboost-predictor4j/badge.svg)](https://maven-badges.herokuapp.com/maven-central/ai.bleckwen/xgboost-predictor4j)
-[![Documentation](https://img.shields.io/badge/doc-DRAFT-YELLOW.svg)](https://github.com/BleckwenAI/xgboost-predictor4j/wiki)
+[![Documentation](https://img.shields.io/badge/wiki-ok-<COLOR>.svg)](https://github.com/BleckwenAI/xgboost-predictor4j/wiki)
 
 [Bleckwen](https://bleckwen.ai/) JVM implementation of [XGBoost](https://github.com/dmlc/xgboost/) Predictor
 
