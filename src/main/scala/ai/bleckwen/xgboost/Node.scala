@@ -4,6 +4,10 @@ package ai.bleckwen.xgboost
  * A generic (binary) node of a decision Tree
  * @param left left node child (NilNode in case of leaf)
  * @param right right node child (NilNode in case of leaf)
+ *
+ * Note: this pattern is a bit unsual. The good practice would be to define a Leaf object rather than a Nil
+ * (with null fields) but this solution speeds up processing as we don't need to match case classes when
+ * descending in the tree
  */
 abstract class Node(val left: Node, val right: Node) extends Serializable {
   def defaultLeft: Boolean

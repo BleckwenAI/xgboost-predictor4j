@@ -23,7 +23,7 @@
   <scm>
     <developerConnection>scm:git:git@github.com:BleckwenAI/xgboost-predictor4j.git</developerConnection>
     <url>https://github.com/BleckwenAI/xgboost-predictor4j</url>
-    <tag>xgboost-predictor4j-0.1</tag>
+    <tag>xgboost-predictor4j-1.1</tag>
   </scm>
 
 
@@ -42,7 +42,7 @@
     <maven.surefire.plugin.version>3.0.0-M3</maven.surefire.plugin.version>
     <maven-release-plugin.version>2.5.2</maven-release-plugin.version>
     <maven-jar-plugin.version>2.6</maven-jar-plugin.version>
-    <maven-assembly-plugin.version>3.3.0</maven-assembly-plugin.version>
+    <maven-assembly-plugin.version>3.2.0</maven-assembly-plugin.version>
     <xgboost4j.version>1.0.0</xgboost4j.version>
     <xgboost4j.scope>test</xgboost4j.scope>
     <jmh.version>1.21</jmh.version>
@@ -209,6 +209,12 @@
             <goals>
               <goal>sign</goal>
             </goals>
+            <configuration>
+                <gpgArguments>
+                    <arg>--pinentry-mode</arg>
+                    <arg>loopback</arg>
+                </gpgArguments>
+            </configuration>
           </execution>
         </executions>
       </plugin>

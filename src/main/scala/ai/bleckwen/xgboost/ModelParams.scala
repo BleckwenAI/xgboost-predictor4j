@@ -28,9 +28,22 @@ final case class ModelParams(baseScore: Float, nbFeatures: Int, nbClass: Int, nb
 
 object ModelParams {
 
+  // from 1.4 the binary starts with this
+  private val binHeader = "binf".getBytes
+
+  // load parameters from XGBOOST binary file
   def apply(buffer: ByteBuffer): ModelParams = {
     buffer.order(ByteOrder.LITTLE_ENDIAN)
-    val baseScore = buffer.getFloat
+    // Cpp struct LearnerModelParam
+    val header = new Array[Byte](4)
+    buffer.get(header)
+    val baseScore = if (header.deep == binHeader.deep) buffer.getFloat else {
+      val h = ByteBuffer.wrap(header)
+      h.order(ByteOrder.LITTLE_ENDIAN)
+      h.getFloat
+    }
+    if (baseScore < 0.0 || baseScore > 1.0)
+      throw new UnsupportedOperationException(s"Cannot decode binary file")
     val nbFeatures = buffer.getInt
     val nbClass = buffer.getInt // multi-class classification
     padding(buffer,31)
@@ -38,6 +51,7 @@ object ModelParams {
     val modelType = getString(buffer)
     if (modelType != "gbtree")
       throw new UnsupportedOperationException(s"model Type $modelType is not supported")
+    // Cpp struct GBTreeModelParam
     val nbTrees = buffer.getInt
     buffer.getInt // num_Roots not used
     buffer.getInt // nbFeats

@@ -50,16 +50,23 @@ class Xgboost4jCompatibilySpec extends WordSpec with Matchers with DoubleToleran
       }
     }
 
-    "predict like Xgboost4j on a 0.90 model" in {
-      val v090Path = "/v090.model"
-      val v090Booster = XGBoost.loadModel(this.getClass.getResourceAsStream(v090Path))
-      val v090Predictor  = Predictor(IOUtils.toByteArray(this.getClass.getResourceAsStream(v090Path)))
-      for (_ <- 1 to nbTests) {
-        val feats = (1 to 17).map(_ => rand.nextDouble()*100).toArray
-        val dmatrix = new DMatrix(feats.map(_.toFloat), 1, 17)
-        v090Predictor.predict(feats).head shouldEqual v090Booster.predict(dmatrix).head.head.toDouble
-        }
-      }
+    "predict like Xgboost4j using a 0.90 binary model file" in {
+      compareWithBooster("/v090.model")
+    }
+
+    "predict like Xgboost4j using a 1.4.0 binary model file" in {
+      compareWithBooster("/v140.model")
+    }
+  }
+
+  private def compareWithBooster(modelPath: String) {
+    val predictor  = Predictor(IOUtils.toByteArray(this.getClass.getResourceAsStream(modelPath)))
+    val booster = XGBoost.loadModel(this.getClass.getResourceAsStream(modelPath))
+    for (_ <- 1 to nbTests) {
+      val feats = (1 to 17).map(_ => rand.nextDouble()*100).toArray
+      val dmatrix = new DMatrix(feats.map(_.toFloat), 1, 17)
+      predictor.predict(feats).head shouldEqual booster.predict(dmatrix).head.head.toDouble
+    }
   }
 
   private def writetoFile(bytes: Array[Byte], target: String): Unit = {
