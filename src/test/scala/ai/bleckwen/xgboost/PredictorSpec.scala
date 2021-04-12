@@ -82,9 +82,14 @@ class PredictorSpec extends WordSpec with Matchers with DoubleTolerant {
     }
 
 
-    "fail when build from a small buffer" in {
-      val bytes = "some cromg buffer".getBytes
+    "fail when build from a buffer too small" in {
+      val bytes = "s".getBytes
       an [BufferUnderflowException] should be thrownBy Predictor(bytes)
+    }
+
+    "fail when build from a wrong buffer" in {
+      val bytes = "this is wrong format".getBytes
+      an [UnsupportedOperationException] should be thrownBy Predictor(bytes)
     }
   }
 

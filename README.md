@@ -24,6 +24,7 @@ The impact is negligeable as it happens in very rare situation (a comparison wit
 
 **Release History**
 * 1.0 06/07/2020 first version
+* 1.1 12/04/2021 compatibility with 1.4.0 binary files
 
 **Integration**
 
