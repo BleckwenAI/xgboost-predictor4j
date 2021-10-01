@@ -25,6 +25,7 @@ The impact is negligeable as it happens in very rare situation (a comparison wit
 **Release History**
 * 1.0 06/07/2020 first version
 * 1.1 12/04/2021 compatibility with 1.4.0 binary files
+* 1.2 01/20/2021 release for Scala 2.12
 
 **Integration**
 
@@ -41,7 +42,7 @@ The impact is negligeable as it happens in very rare situation (a comparison wit
 libraryDependencies += "ai.bleckwen" % "xgboost-predictor4j" % "1.0"
 ```
 
-The package was build and published wih **Scala 2.11.12** but you can rebuild it with Scala 2.12 by using Maven profile `scala12` or by using the Makefile goal. 
+The package was build and published wih **Scala 2.12.13** but you can rebuild it with Scala 2.13 by using Maven profile `scala213` or by using the Makefile goal. 
 
 **Using Predictor in Scala**
 

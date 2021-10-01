@@ -30,8 +30,8 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <scala.version>2.11.12</scala.version>
-    <scala.major.version>2.11</scala.major.version>
+    <scala.version>2.12.13</scala.version>
+    <scala.major.version>2.12</scala.major.version>
     <scala.maven.plugin.version>4.4.0</scala.maven.plugin.version>
     <scalatest.version>3.0.8</scalatest.version>
     <scalatest-maven-plugin.version>2.0.0</scalatest-maven-plugin.version>
@@ -99,6 +99,12 @@
       <artifactId>xgboost4j_${scala.major.version}</artifactId>
       <version>${xgboost4j.version}</version>
       <scope>${xgboost4j.scope}</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>scala-library</artifactId>
+          <groupId>org.scala-lang</groupId>
+        </exclusion>
+      </exclusions>
     </dependency>
 
   </dependencies>
@@ -313,12 +319,12 @@
       </activation>
     </profile>
 
-    <!-- BUILD WITH Scala 2.12 -->
+    <!-- BUILD WITH Scala 2.13 -->
     <profile>
-      <id>scala12</id>
+      <id>scala213</id>
       <properties>
-        <scala.major.version>2.12</scala.major.version>
-        <scala.version>2.12.8</scala.version>
+        <scala.major.version>2.13</scala.major.version>
+        <scala.version>2.13.6</scala.version>
       </properties>
       <build>
         <finalName>${project.artifactId}_${scala.major.version}</finalName>

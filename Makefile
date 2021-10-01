@@ -25,8 +25,8 @@ coverage: ## run coverage and update the README
 	coverage=$$(sed -nE 's/ *<td>([0-9]*).[0-9]*%<.*/\1/p' target/site/scoverage/packages.html | head -1); sed -i "s/coverage-.*%25/coverage-$$coverage%25/" README.md
 	git status
 
-build12: ## build and install with Scala 2.12
-	mvn clean install -Pscala12
+build213: ## build and install with Scala 2.13
+	mvn clean install -Pscala213
 
 bench: ## build with JMH and run bench tests
 	rm -f *.jfr
