@@ -20,7 +20,7 @@ final case class NodeImpl(override val left: Node,
                           id: Int,
                           index: Int,
                           defaultLeft: Boolean,
-                          value: Double,
+                          value: Float,
                           sumHess: Double,
                           var mean: Double = 0.0)
   extends Node(left, right) {
@@ -41,7 +41,7 @@ final case class NodeImpl(override val left: Node,
     buffer.putInt(right.id)
     buffer.putInt(index)
     buffer.putInt(if (defaultLeft) 1 else 0)
-    buffer.putDouble(value)
+    buffer.putDouble(value.toDouble)
     buffer.putDouble(sumHess)
     buffer.putDouble(mean)
     buffer.array
@@ -73,7 +73,7 @@ case object NodeFactoryImpl extends NodeFactory {
         nodeId,
         buffer.getInt,
         buffer.getInt == 1,
-        buffer.getDouble,
+        buffer.getDouble.toFloat,
         buffer.getDouble,
         buffer.getDouble)
       nodesMap.put(nodeId, node)
