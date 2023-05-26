@@ -26,6 +26,7 @@ The impact is negligeable as it happens in very rare situation (a comparison wit
 * 1.0 06/07/2020 first version
 * 1.1 12/04/2021 compatibility with 1.4.0 binary files
 * 1.2 01/20/2021 release for Scala 2.12
+* 1.3 26/05/2023 fix: compare float values
 
 **Integration**
 
