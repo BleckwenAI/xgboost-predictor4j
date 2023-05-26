@@ -11,7 +11,7 @@ package ai.bleckwen.xgboost
  */
 abstract class Node(val left: Node, val right: Node) extends Serializable {
   def defaultLeft: Boolean
-  def value: Double
+  def value: Float
   def id: Int
   def index: Int
   def mean: Double
@@ -25,7 +25,7 @@ abstract class Node(val left: Node, val right: Node) extends Serializable {
 
   def next(vector: FVector): Node = vector.get(index) match {
       case None => if (defaultLeft) left else right
-      case Some(v) => if (v < value) left else right
+      case Some(v) => if (v.toFloat < value) left else right
     }
 
   def findLeaf(vector: FVector): Node = {
@@ -46,7 +46,7 @@ abstract class Node(val left: Node, val right: Node) extends Serializable {
 
 case object NilNode extends Node(null, null) {
   override val defaultLeft: Boolean = true
-  override val value: Double =  Double.NaN
+  override val value: Float =  Float.NaN
   override val index: Int = -1
   override def id: Int = -1
   override val mean: Double =  Double.NaN
